@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import RecipeCard from "../../components/RecipeCard";
 import NoFavoritesFound from "../../components/NoFavoritesFound";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { LinearGradient } from "expo-linear-gradient";
 
 const FavoritesScreen = () => {
   const { signOut } = useClerk();
@@ -51,7 +52,10 @@ const FavoritesScreen = () => {
   if (loading) return <LoadingSpinner message="Loading your favorites..." />;
 
   return (
-    <View style={favoritesStyles.container}>
+    <LinearGradient
+      colors={["#0A0A0E", "#161622"]}
+      style={favoritesStyles.container}
+    >
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={favoritesStyles.header}>
           <Text style={favoritesStyles.title}>Favorites</Text>
@@ -73,7 +77,7 @@ const FavoritesScreen = () => {
           />
         </View>
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 };
 export default FavoritesScreen;

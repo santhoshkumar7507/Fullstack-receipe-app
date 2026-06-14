@@ -86,6 +86,19 @@ const roseGoldTheme = {
   shadow: "#000000",
 };
 
+const premiumDarkTheme = {
+  primary: "#FF4D4D",        // Vibrant coral/neon red
+  background: "#0A0A0E",     // Deep dark blue-black
+  text: "#FFFFFF",           // Bright white text
+  border: "rgba(255,255,255,0.1)", // Subtle translucent borders
+  white: "#FFFFFF",
+  textLight: "#9BA1A6",      // Soft gray for secondary text
+  card: "rgba(30, 30, 36, 0.6)", // Glassmorphic card color
+  shadow: "#000000",
+  glass: "rgba(255,255,255,0.05)",
+  glassActive: "rgba(255,77,77,0.15)",
+};
+
 export const THEMES = {
   coffee: coffeeTheme,
   forest: forestTheme,
@@ -95,7 +108,8 @@ export const THEMES = {
   mint: mintTheme,
   midnight: midnightTheme,
   roseGold: roseGoldTheme,
+  premiumDark: premiumDarkTheme,
 };
 
 // 👇 change this to switch theme
-export const COLORS = THEMES.purple;
+export const COLORS = THEMES.premiumDark;

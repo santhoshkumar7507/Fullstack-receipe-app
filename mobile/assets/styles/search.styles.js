@@ -74,26 +74,24 @@ export const searchStyles = StyleSheet.create({
   },
   resultsSection: {
     flex: 1,
-    paddingHorizontal: 16,
-    marginTop: 8,
+    paddingHorizontal: 20,
   },
   resultsHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 20,
     marginBottom: 16,
-    marginTop: 16,
   },
   resultsTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontWeight: "800",
     color: COLORS.text,
-    flex: 1,
   },
   resultsCount: {
     fontSize: 14,
-    color: COLORS.textLight,
-    fontWeight: "500",
+    color: COLORS.primary,
+    fontWeight: "600",
   },
   loadingContainer: {
     flex: 1,
@@ -102,20 +100,20 @@ export const searchStyles = StyleSheet.create({
   },
   recipesGrid: {
     gap: 16,
-    paddingBottom: 32,
+    paddingBottom: 100,
   },
   row: {
     justifyContent: "space-between",
+    gap: 16,
   },
   emptyState: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     paddingVertical: 64,
+    paddingHorizontal: 32,
   },
   emptyTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "800",
     color: COLORS.text,
     marginTop: 16,
     marginBottom: 8,

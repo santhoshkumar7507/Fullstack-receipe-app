@@ -7,6 +7,7 @@ import { COLORS } from "../../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import RecipeCard from "../../components/RecipeCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { LinearGradient } from "expo-linear-gradient";
 
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,7 +80,10 @@ const SearchScreen = () => {
   if (initialLoading) return <LoadingSpinner message="Loading recipes..." />;
 
   return (
-    <View style={searchStyles.container}>
+    <LinearGradient
+      colors={["#0A0A0E", "#161622"]}
+      style={searchStyles.container}
+    >
       <View style={searchStyles.searchSection}>
         <View style={searchStyles.searchContainer}>
           <Ionicons
@@ -129,7 +133,7 @@ const SearchScreen = () => {
           />
         )}
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 export default SearchScreen;

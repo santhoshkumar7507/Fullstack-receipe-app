@@ -4,15 +4,33 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { COLORS } from "../constants/colors";
 import { recipeCardStyles } from "../assets/styles/home.styles";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 export default function RecipeCard({ recipe }) {
   const router = useRouter();
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.95);
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1);
+  };
 
   return (
-    <TouchableOpacity
-      style={recipeCardStyles.container}
+    <AnimatedTouchableOpacity
+      style={[recipeCardStyles.container, animatedStyle]}
       onPress={() => router.push(`/recipe/${recipe.id}`)}
-      activeOpacity={0.8}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      activeOpacity={0.9}
     >
       <View style={recipeCardStyles.imageContainer}>
         <Image
@@ -36,18 +54,18 @@ export default function RecipeCard({ recipe }) {
         <View style={recipeCardStyles.footer}>
           {recipe.cookTime && (
             <View style={recipeCardStyles.timeContainer}>
-              <Ionicons name="time-outline" size={14} color={COLORS.textLight} />
+              <Ionicons name="time-outline" size={14} color={COLORS.primary} />
               <Text style={recipeCardStyles.timeText}>{recipe.cookTime}</Text>
             </View>
           )}
           {recipe.servings && (
             <View style={recipeCardStyles.servingsContainer}>
-              <Ionicons name="people-outline" size={14} color={COLORS.textLight} />
+              <Ionicons name="people-outline" size={14} color={COLORS.primary} />
               <Text style={recipeCardStyles.servingsText}>{recipe.servings}</Text>
             </View>
           )}
         </View>
       </View>
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   );
 }

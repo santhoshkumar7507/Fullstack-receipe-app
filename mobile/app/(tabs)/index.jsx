@@ -9,6 +9,8 @@ import { Ionicons } from "@expo/vector-icons";
 import CategoryFilter from "../../components/CategoryFilter";
 import RecipeCard from "../../components/RecipeCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { LinearGradient } from "expo-linear-gradient";
+import Animated, { FadeIn, FadeInDown, FadeInRight } from "react-native-reanimated";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -77,7 +79,6 @@ const HomeScreen = () => {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    // await sleep(2000);
     await loadData();
     setRefreshing(false);
   };
@@ -86,10 +87,13 @@ const HomeScreen = () => {
     loadData();
   }, []);
 
-  if (loading && !refreshing) return <LoadingSpinner message="Loading delicions recipes..." />;
+  if (loading && !refreshing) return <LoadingSpinner message="Curating premium recipes..." />;
 
   return (
-    <View style={homeStyles.container}>
+    <LinearGradient
+      colors={["#0A0A0E", "#161622"]}
+      style={homeStyles.container}
+    >
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -101,34 +105,13 @@ const HomeScreen = () => {
         }
         contentContainerStyle={homeStyles.scrollContent}
       >
-        {/*  ANIMAL ICONS */}
-        <View style={homeStyles.welcomeSection}>
-          <Image
-            source={require("../../assets/images/lamb.png")}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          />
-          <Image
-            source={require("../../assets/images/chicken.png")}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          />
-          <Image
-            source={require("../../assets/images/pork.png")}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          />
-        </View>
+        <Animated.View entering={FadeInDown.duration(600).delay(100)} style={homeStyles.welcomeSection}>
+          <Text style={homeStyles.welcomeText}>Discover{"\n"}Exceptional Recipes</Text>
+        </Animated.View>
 
         {/* FEATURED SECTION */}
         {featuredRecipe && (
-          <View style={homeStyles.featuredSection}>
+          <Animated.View entering={FadeInDown.duration(800).delay(200)} style={homeStyles.featuredSection}>
             <TouchableOpacity
               style={homeStyles.featuredCard}
               activeOpacity={0.9}
@@ -140,6 +123,10 @@ const HomeScreen = () => {
                   style={homeStyles.featuredImage}
                   contentFit="cover"
                   transition={500}
+                />
+                <LinearGradient
+                  colors={["transparent", "rgba(0,0,0,0.8)"]}
+                  style={homeStyles.gradientOverlay}
                 />
                 <View style={homeStyles.featuredOverlay}>
                   <View style={homeStyles.featuredBadge}>
@@ -153,16 +140,16 @@ const HomeScreen = () => {
 
                     <View style={homeStyles.featuredMeta}>
                       <View style={homeStyles.metaItem}>
-                        <Ionicons name="time-outline" size={16} color={COLORS.white} />
+                        <Ionicons name="time-outline" size={16} color={COLORS.primary} />
                         <Text style={homeStyles.metaText}>{featuredRecipe.cookTime}</Text>
                       </View>
                       <View style={homeStyles.metaItem}>
-                        <Ionicons name="people-outline" size={16} color={COLORS.white} />
+                        <Ionicons name="people-outline" size={16} color={COLORS.primary} />
                         <Text style={homeStyles.metaText}>{featuredRecipe.servings}</Text>
                       </View>
                       {featuredRecipe.area && (
                         <View style={homeStyles.metaItem}>
-                          <Ionicons name="location-outline" size={16} color={COLORS.white} />
+                          <Ionicons name="location-outline" size={16} color={COLORS.primary} />
                           <Text style={homeStyles.metaText}>{featuredRecipe.area}</Text>
                         </View>
                       )}
@@ -171,24 +158,27 @@ const HomeScreen = () => {
                 </View>
               </View>
             </TouchableOpacity>
-          </View>
+          </Animated.View>
         )}
 
         {categories.length > 0 && (
-          <CategoryFilter
-            categories={categories}
-            selectedCategory={selectedCategory}
-            onSelectCategory={handleCategorySelect}
-          />
+          <Animated.View entering={FadeInRight.duration(800).delay(300)}>
+            <CategoryFilter
+              categories={categories}
+              selectedCategory={selectedCategory}
+              onSelectCategory={handleCategorySelect}
+            />
+          </Animated.View>
         )}
 
         <View style={homeStyles.recipesSection}>
-          <View style={homeStyles.sectionHeader}>
+          <Animated.View entering={FadeIn.duration(800).delay(400)} style={homeStyles.sectionHeader}>
             <Text style={homeStyles.sectionTitle}>{selectedCategory}</Text>
-          </View>
+          </Animated.View>
 
           {recipes.length > 0 ? (
-            <FlatList
+            <Animated.FlatList
+              entering={FadeInDown.duration(800).delay(500)}
               data={recipes}
               renderItem={({ item }) => <RecipeCard recipe={item} />}
               keyExtractor={(item) => item.id.toString()}
@@ -196,7 +186,6 @@ const HomeScreen = () => {
               columnWrapperStyle={homeStyles.row}
               contentContainerStyle={homeStyles.recipesGrid}
               scrollEnabled={false}
-              // ListEmptyComponent={}
             />
           ) : (
             <View style={homeStyles.emptyState}>
@@ -207,7 +196,7 @@ const HomeScreen = () => {
           )}
         </View>
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 };
 export default HomeScreen;
